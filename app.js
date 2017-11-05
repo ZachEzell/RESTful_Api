@@ -2,10 +2,8 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-mongoose.connect(
-  'mongodb://TwitchMaster:a3bbhh5w3@ds149724.mlab.com:49724/twitchybuilder'
-);
+const keys = require('./config/keys');
+mongoose.connect(keys.mongoURI);
 
 // SCHEMA
 
