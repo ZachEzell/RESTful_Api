@@ -81,7 +81,8 @@ app.get('/campgrounds', (req, res) => {
 app.post('/campgrounds', (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = { name: name, image: image };
+  var desc = req.body.description;
+  var newCampground = { name: name, image: image, description: desc };
   //   campgrounds.push(newCampground);
   Campground.create(newCampground, (err, newlyCreated) => {
     if (err) {
@@ -97,9 +98,15 @@ app.post('/campgrounds', (req, res) => {
 app.get('/campgrounds/new', (req, res) => {
   res.render('new.ejs');
 });
-
+// SHOW - will show more info about a particular campground
 app.get('/campgrounds/:id', (req, res) => {
-  res.render('show');
+  Campground.findById(req.params.id, (err, foundCampground) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('show', { campground: foundCampground });
+    }
+  });
 });
 app.listen(process.env.PORT || 5000, process.env.IP, () => {
   'the server has started';
